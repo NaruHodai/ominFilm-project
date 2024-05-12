@@ -1,4 +1,4 @@
-# ominfilm
+# 0minFilm
 
 ## Project setup
 ```
