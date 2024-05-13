@@ -79,7 +79,6 @@ section {
 .photo-flame {
     position: relative; /* 포지션 설정 */
     max-width: 100%;
-    overflow: hidden; /* 이미지가 부모 요소를 넘어가지 않도록 합니다 */
 }
 
 .photo-flame img {
@@ -88,8 +87,14 @@ section {
     display: block; /* 인라인 요소에서 블록 요소로 변환하여 가로 너비를 100%로 설정합니다 */
 }
 
-.text-overlay {
+.text-overlay-wrap {
     position: absolute; /* 포지션 설정 */
+    height: 80%;
+}
+
+.text-overlay {
+    position: sticky;
+    top: 7vh;
     color: #fff; /* 텍스트 색상을 흰색으로 설정 */
 }
 .text-overlay .text-middle {
@@ -162,7 +167,7 @@ footer {
         display: block;
         margin: 10px 0;
     }
-    .text-overlay {
+    .text-overlay-wrap {
         font-size: 30%;
         top: 20px; /* 상단으로부터 10px 위치에 배치 */
         left: 25px; /* 왼쪽으로부터 10px 위치에 배치 */
@@ -194,7 +199,7 @@ footer {
         display: inline;
         margin-right: 20px;
     }
-    .text-overlay {
+    .text-overlay-wrap {
         font-size: 100%;
         top: 90px; /* 상단으로부터 10px 위치에 배치 */
         left: 70px; /* 왼쪽으로부터 10px 위치에 배치 */
