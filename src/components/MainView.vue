@@ -32,7 +32,9 @@ export default {
     <section>
       <div class="photo-wrap" v-for="(photo, index) in photos" :key="index">
         <div class="photo-flame" @click="onClickMoveDetailPage(index)">
-          <img :src="photo.src[0]">
+          <div class="img-box">
+            <img :src="photo.src[0]">
+          </div>
           <div class="text-overlay-wrap">
             <div class="text-overlay">
               <div class="text-middle">{{ photo.type }}</div>
