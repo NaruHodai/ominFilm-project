@@ -79,7 +79,7 @@ section {
 
 .text-overlay {
     position: sticky;
-    top: 7vh;
+    top: 10vh;
     color: #fff; /* 텍스트 색상을 흰색으로 설정 */
 }
 .text-overlay .text-middle {
@@ -160,8 +160,6 @@ footer {
         font-size: 30%;
         top: 20px; /* 상단으로부터 10px 위치에 배치 */
         left: 25px; /* 왼쪽으로부터 10px 위치에 배치 */
-    }
-    .text-overlay-wrap {
         height: 90%;
     }
     .text-overlay .text-small {
