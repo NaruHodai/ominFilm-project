@@ -1,7 +1,7 @@
 <script>
 import {useRouter} from "vue-router";
 import { getCurrentInstance } from "vue";
-import Route from "@/router/route"
+import Routes from "@/router/routes"
 
 export default {
   name:'MainView',
@@ -12,7 +12,7 @@ export default {
 
     const onClickMoveDetailPage = (index) => {
       router.push({
-        name: Route.detailPage,
+        name: Routes.DetailPage,
         params:{
           photo: index
         },
@@ -55,7 +55,7 @@ export default {
           </div>
         </div>
       </div>
-      <img src="@/assets/images/bottomLineLogo.png" style="width: 100%;">
+      <img src="../assets/images/bottomLineLogo.png" style="width: 100%;">
       <div class="photo-flame">
         <img src="../assets/images/myPhoto.jpg">
       </div>

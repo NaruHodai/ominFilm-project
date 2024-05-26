@@ -1,6 +1,6 @@
 <script>
 import {useRouter} from "vue-router";
-import Route from "@/router/route"
+import Routes from "@/router/routes"
 
 export default {
   name:'HeaderView',
@@ -15,7 +15,7 @@ export default {
 
     const onClickMoveMain = () => {
       router.push({
-        name:Route.main,
+        name:Routes.Main,
       })
     };
 

@@ -5,12 +5,12 @@ const router = createRouter({
     routes: [    {
         path: "/",
         name: "main",
-        component: () => import("@/components/MainView.vue"),
+        component: () => import("@/views/MainView.vue"),
     },
         {
             path: "/detail/:photo",
             name: "detailPage",
-            component: () => import("@/components/DetailPageView.vue"),
+            component: () => import("@/views/DetailPageView.vue"),
         },
     ],
 });
