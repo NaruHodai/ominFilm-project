@@ -158,21 +158,21 @@ footer {
     }
     .text-overlay-wrap {
         font-size: 30%;
-        top: 20px; /* 상단으로부터 10px 위치에 배치 */
-        left: 25px; /* 왼쪽으로부터 10px 위치에 배치 */
+        top: 70px; /* 상단으로부터 10px 위치에 배치 */
+        left: 35px; /* 왼쪽으로부터 10px 위치에 배치 */
         height: 90%;
     }
     .text-overlay .text-small {
-        font-size: 8pt;
+        font-size: 9pt;
         margin-bottom: 3px;
     }
     .text-overlay .text-middle {
-        font-size: 12pt;
+        font-size: 10pt;
         margin-bottom: 1px;
     }
     .text-overlay .text-big {
-        font-size: 19pt;
-        margin-bottom: 2px;
+        font-size: 25pt;
+        margin-bottom: 8px;
     }
     footer {
         height: 25px;
