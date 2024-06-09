@@ -1,4 +1,5 @@
 export default Object.freeze({
     Main: "main",
-    DgetailPage: "detailPage",
+    DetailPage: "detailPage",
+    AdminPage: "adminPage",
 })
