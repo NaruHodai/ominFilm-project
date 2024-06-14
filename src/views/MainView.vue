@@ -1,6 +1,6 @@
 <script>
 import {useRouter} from "vue-router";
-import { getCurrentInstance } from "vue";
+import { getCurrentInstance, onMounted, ref } from "vue";
 import Routes from "@/router/routes"
 
 export default {
@@ -19,9 +19,24 @@ export default {
       })
     }
 
+    const currentPhotoIndex = ref(0);
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const totalPhotos = photos.length;
+
+      const newIndex = Math.floor(scrollPosition / windowHeight) % totalPhotos;
+      currentPhotoIndex.value = newIndex;
+    };
+
+    onMounted(() => {
+      window.addEventListener('scroll', handleScroll);
+    });
+
     return {
       photos,
       onClickMoveDetailPage,
+      currentPhotoIndex,
     };
   }
 }
@@ -33,7 +48,14 @@ export default {
       <div class="photo-wrap" v-for="(photo, index) in photos" :key="index">
         <div class="photo-flame" @click="onClickMoveDetailPage(index)">
           <div class="img-box">
-            <img :src="photo.src[0]">
+            <img
+                v-for="(imgSrc, imgIndex) in photo.src"
+                :key="imgIndex"
+                :src="imgSrc"
+                :class="{ 'active': imgIndex === currentPhotoIndex }"
+                class="image"
+            />
+
           </div>
           <div class="text-overlay-wrap">
             <div class="text-overlay">

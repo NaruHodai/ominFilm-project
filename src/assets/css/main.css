@@ -126,7 +126,88 @@ iframe {
     border: none;
 }
 
-/* 풋터 스타일링 */
+/*관리자 페이지 스타일링*/
+.admin-wrap {
+    height: 88vh; /* 높이를 70%로 설정 */
+    display: flex; /* Flexbox 레이아웃 */
+    flex-direction: column; /* 수직 정렬 */
+    justify-content: center; /* 수직 가운데 정렬 */
+    align-items: center; /* 수평 가운데 정렬 */
+    padding: 10px; /* 콘텐츠와 경계 사이의 여백 */
+    box-sizing: border-box; /* 패딩을 포함한 크기 계산 */
+    background-color: #f9f9f9; /* 배경색 추가 */
+}
+.admin-wrap > * {
+    width: 100%; /* 자식 요소들이 부모의 너비를 채우도록 */
+    flex: 1 1 auto; /* 자식 요소가 동적으로 크기를 조절할 수 있도록 */
+    justify-content: center; /* 자식 요소들 내의 콘텐츠를 가운데 정렬 */
+    align-items: center; /* 자식 요소들 내의 콘텐츠를 가운데 정렬 */
+    overflow: hidden; /* 자식 요소의 넘치는 내용을 숨김 */
+}
+
+.admin-wrap .app {
+    display: flex; /* Flexbox 레이아웃 */
+    flex-direction: column; /* 수직 정렬 */
+    width: 100%; /* 부모의 너비를 채움 */
+    max-width: 600px; /* 최대 너비 설정 */
+    max-height: 120%; /* 최대 높이를 부모에 맞춤 */
+    margin: 20px auto; /* 자동으로 수평 가운데 정렬 */
+    padding: 20px; /* 내부 패딩 */
+    border: 1px solid #ccc; /* 경계선 */
+    border-radius: 10px; /* 모서리 반경 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    box-sizing: border-box; /* 패딩을 포함한 크기 계산 */
+}
+.admin-wrap .app .list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto; /* 세로 스크롤 추가 */
+    width: 500px;
+    padding-right: 15px; /* 스크롤바가 콘텐츠를 가리지 않도록 패딩 추가 */
+}
+.admin-wrap .app .list-item {
+    padding: 10px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: grab;
+}
+.save-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: RGB(225,53,48);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.save-button:hover {
+    background-color: #D04848;
+}
+/*컨텐츠 수정 추가 페이지 스타일링*/
+.admin-wrap .contentsInfo {
+    display: flex; /* Flexbox 레이아웃 */
+    flex-direction: column; /* 수직 정렬 */
+    width: 100%; /* 부모의 너비를 채움 */
+    max-width: 600px; /* 최대 너비 설정 */
+    max-height: 1000vh; /* 최대 높이를 설정하여 스크롤이 필요하게 만듦 */
+    height: 100%;
+    margin: 20px auto; /* 자동으로 수평 가운데 정렬 */
+    padding: 20px; /* 내부 패딩 */
+    border: 1px solid #ccc; /* 경계선 */
+    border-radius: 10px; /* 모서리 반경 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    box-sizing: border-box; /* 패딩을 포함한 크기 계산 */
+    flex-grow: 1; /* 추가된 내용: flexbox 아이템이 가용 공간을 차지하도록 설정 */
+}
+
+.contentsInfo-wrap {
+    overflow-y: auto; /* 세로 스크롤 가능 */
+}
+
+    /* 풋터 스타일링 */
 footer {
     background-color: #fff;
     color: #333;
@@ -175,8 +256,14 @@ footer {
         margin-bottom: 8px;
     }
     footer {
-        height: 25px;
-        font-size: 10%;
+        height: 30px;
+        font-size: 55%;
+    }
+    footer p {
+        margin-bottom: 0rem;
+    }
+    .admin-wrap .app .list {
+        width: 350px;
     }
 }
 
