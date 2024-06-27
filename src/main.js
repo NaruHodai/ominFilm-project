@@ -29,7 +29,7 @@ const photos = [
         client: "반달",
         place: "포항 구룡포 해수욕장",
         date: "",
-        videoUrl: "",
+        youtubeSrc: [],
     },
     {
         src: [
@@ -43,7 +43,9 @@ const photos = [
         client: "이리와 내 꿈에 태워줄게",
         place: "대구 시민생활스포츠센터",
         date: "2023.09.13",
-        videoUrl: "https://www.youtube.com/embed/a9gRQBwnhHE",
+        youtubeSrc: [
+            "a9gRQBwnhHE",
+        ],
     },
     {
         src: [
@@ -57,7 +59,9 @@ const photos = [
         client: "심상명",
         place: "이월드",
         date: "2024.01.31",
-        videoUrl: "https://www.youtube.com/embed/_BTH2Jeo_7A",
+        youtubeSrc: [
+            "_BTH2Jeo_7A",
+        ],
     },
     {
         src: [
@@ -71,7 +75,9 @@ const photos = [
         client: "야지수",
         place: "부산 민락",
         date: "2023.04.17",
-        videoUrl: "https://www.youtube.com/embed/CvLDqoO_c4o",
+        youtubeSrc: [
+            "CvLDqoO_c4o",
+        ],
     },
     {
         src: [
@@ -85,7 +91,9 @@ const photos = [
         client: "johnhasabigmouth",
         place: "세븐일레븐",
         date: "2023.05.19",
-        videoUrl: "https://www.youtube.com/embed/rMIJHrE3EJA",
+        youtubeSrc: [
+            "rMIJHrE3EJA",
+        ],
     },
     {
         src: [
@@ -99,7 +107,9 @@ const photos = [
         client: "이글루",
         place: "제임스레코드",
         date: "2023.06.28",
-        videoUrl: "https://www.youtube.com/embed/Di0duCTBKKY",
+        youtubeSrc: [
+            "Di0duCTBKKY",
+        ],
     },
     {
         src: [
@@ -113,7 +123,9 @@ const photos = [
         client: "빈달",
         place: "꼼지락발전소",
         date: "2023.08.26",
-        videoUrl: "https://www.youtube.com/embed/0NcYGr1GCTk",
+        youtubeSrc: [
+            "0NcYGr1GCTk",
+        ],
     },
     {
         src: [
@@ -127,7 +139,9 @@ const photos = [
         client: "이날치",
         place: "꼬문",
         date: "2023.10.13",
-        videoUrl: "https://www.youtube.com/embed/L9Wh9Wpto1c",
+        youtubeSrc: [
+            "L9Wh9Wpto1c",
+        ],
     },
     {
         src: [
@@ -141,7 +155,9 @@ const photos = [
         client: "리게인 프로젝트 본점",
         place: "대구 중구 약령시",
         date: "2022.08.17",
-        videoUrl: "https://www.youtube.com/embed/5blSVEGreM8",
+        youtubeSrc: [
+            "5blSVEGreM8",
+        ],
     },
     {
         src: [
@@ -155,7 +171,7 @@ const photos = [
         client: "동성로 반스",
         place: "동성로 반스",
         date: "2021.08.15",
-        videoUrl: "",
+        youtubeSrc: "",
     },
     {
         src: [
@@ -169,7 +185,9 @@ const photos = [
         client: "탐쓴",
         place: "(구)꽃자리다방",
         date: "2023.04.24",
-        videoUrl: "https://www.youtube.com/embed/Zozngs0oq48",
+        youtubeSrc: [
+            "Zozngs0oq48",
+        ],
     },
     {
         src: [
@@ -183,7 +201,7 @@ const photos = [
         client: "우승연",
         place: "대구 웨딩스위치",
         date: "2023.06.03",
-        videoUrl: "",
+        youtubeSrc: "",
     },
     {
         src: [
@@ -197,7 +215,9 @@ const photos = [
         client: "드링킹소년소녀합창단",
         place: "대구 수성네거리",
         date: "2024.02.15",
-        videoUrl: "https://www.youtube.com/embed/xIUaeeTRSLA",
+        youtubeSrc: [
+            "xIUaeeTRSLA",
+        ],
     },
     {
         src: [
@@ -211,7 +231,9 @@ const photos = [
         client: "이글루",
         place: "제임스레코드",
         date: "2023.06.28",
-        videoUrl: "https://www.youtube.com/embed/3JMjzFZ9F1s",
+        youtubeSrc: [
+            "3JMjzFZ9F1s",
+        ],
     },
     {
         src: [
@@ -225,7 +247,9 @@ const photos = [
         client: "리게인 프로젝트 본점",
         place: "리게인 프로젝트 강남 플래그쉽",
         date: "2023.04.04",
-        videoUrl: "https://www.youtube.com/embed/BqqQ6GG-jfU",
+        youtubeSrc: [
+            "BqqQ6GG-jfU",
+        ],
     },
     {
         src: [
@@ -239,7 +263,9 @@ const photos = [
         client: "리게인 프로젝트 본점",
         place: "리게인 프로젝트 본점",
         date: "2023.08.12",
-        videoUrl: "https://www.youtube.com/embed/Os6hmZdYiIE",
+        youtubeSrc: [
+            "Os6hmZdYiIE",
+        ],
     },
     {
         src: [
@@ -253,7 +279,7 @@ const photos = [
         client: "인디공오삼",
         place: "대구 동성로 28아트스퀘어",
         date: "2023.12.10",
-        videoUrl: "",
+        youtubeSrc: [],
     },
     {
         src: [
@@ -267,7 +293,9 @@ const photos = [
         client: "오터스맵",
         place: "서문시장",
         date: "2023.01.05",
-        videoUrl: "https://www.youtube.com/embed/7qamlLeSbKs",
+        youtubeSrc: [
+            "7qamlLeSbKs",
+        ],
     },
 ];
 

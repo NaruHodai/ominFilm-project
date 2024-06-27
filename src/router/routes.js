@@ -4,4 +4,5 @@ export default Object.freeze({
     AdminPage: "adminPage",
     LoginPage: "loginPage",
     ContentsInfoPage: "contentsInfoPage",
+    AddContentsInfoPage: "addContentsInfoPage",
 })

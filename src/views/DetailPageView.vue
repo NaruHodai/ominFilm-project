@@ -43,8 +43,8 @@ export default {
   <div class="photo-wrap">
     <div class="photo-text">
     </div>
-    <div class="iframe-container" v-if="detailPhoto.videoUrl">
-      <iframe width="100%" :height="iframeHeight" :src="detailPhoto.videoUrl" allowfullscreen />
+    <div class="iframe-container" v-for="(youtube, index) in detailPhoto.youtubeSrc" :key="index">
+      <iframe width="100%" :height="iframeHeight" :src="`https://www.youtube.com/embed/${youtube}`" allowfullscreen />
     </div>
     <div class="photo-wrap" v-for="(photo, index) in detailPhoto.src" :key="index">
       <div class="photo-flame">

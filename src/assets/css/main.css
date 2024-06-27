@@ -174,7 +174,6 @@ iframe {
     cursor: grab;
 }
 .save-button {
-    margin-top: 20px;
     padding: 10px 20px;
     background-color: RGB(225,53,48);
     color: white;
@@ -184,7 +183,10 @@ iframe {
     font-size: 16px;
 }
 .save-button:hover {
-    background-color: #D04848;
+    background-color: white;
+    color: RGB(225,53,48);
+    border: 1px solid;
+    border-color: RGB(225,53,48);
 }
 /*컨텐츠 수정 추가 페이지 스타일링*/
 .admin-wrap .contentsInfo {
@@ -207,6 +209,23 @@ iframe {
     overflow-y: auto; /* 세로 스크롤 가능 */
 }
 
+.contentsInfo-button {
+    padding: 10px 20px;
+    background-color: RGB(225,53,48);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    width: 100px;
+}
+.contentsInfo-button:hover {
+    background-color: white;
+    color: RGB(225,53,48);
+    border: 1px solid;
+    border-color: RGB(225,53,48);
+}
     /* 풋터 스타일링 */
 footer {
     background-color: #fff;

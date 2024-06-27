@@ -25,9 +25,14 @@ const router = createRouter({
             component: () => import("@/views/LoginView.vue"),
         },
         {
-            path: "/contentsInfo/:photo",
+            path: "/contentsInfo/:projectId",
             name: Routes.ContentsInfoPage,
             component: () => import("@/views/ContentsInfoView.vue"),
+        },
+        {
+            path: "/add/contentsInfo",
+            name: Routes.AddContentsInfoPage,
+            component: () => import("@/views/AddContentsInfo.vue"),
         },
     ],
 });
