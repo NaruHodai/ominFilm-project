@@ -35,6 +35,13 @@ const router = createRouter({
             component: () => import("@/views/AddContentsInfo.vue"),
         },
     ],
+    scrollBehavior(to, from, savedPosition) {
+        if (to.name === Routes.DetailPage) {
+            return { top: 0 };
+        } else {
+            return savedPosition || { x: 0, y: 0 };
+        }
+    },
 });
 
 router.beforeEach((to, from, next) => {

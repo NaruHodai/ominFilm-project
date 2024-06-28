@@ -3,7 +3,7 @@ import {onMounted, ref} from 'vue';
 import draggable from 'vuedraggable';
 import {useRouter} from "vue-router";
 import Routes from "@/router/routes";
-import {getContents} from "@/api/contents";
+import {getContents, updateContentOrder} from "@/api/contents";
 
 export default {
   name: "AdminPageView",
@@ -44,16 +44,31 @@ export default {
       })
     }
 
-    const saveOrder = () => {
-      // 아이템의 현재 순서를 콘솔에 출력
-      console.log("Current order:", items.value);
-      // 여기에 변경된 순서를 서버에 저장하는 등의 추가 로직을 작성할 수 있습니다.
+    const onClickSaveOrder = async () => {
+      const updatedProjects = items.value.map((project, index) => ({
+        projectId: project.projectId,
+        projectSeq: index + 1,
+      }));
+
+      try {
+        const response = await updateContentOrder(updatedProjects);
+        console.log("response:", response);
+        if (response) {
+          alert(response);
+          window.location.reload();
+        } else {
+          console.error('Unexpected response:', response);
+        }
+      } catch (error) {
+        console.error('Failed to update project order:', error);
+      }
     };
+
     return {
       items,
       onClickMoveAddContents,
       onClickMoveDetailContentsInfo,
-      saveOrder,
+      onClickSaveOrder,
     };
   }
 }
@@ -78,7 +93,7 @@ export default {
         </div>
       </template>
     </draggable>
-    <button @click="saveOrder" class="save-button">저장</button>
+    <button @click="onClickSaveOrder" class="save-button">저장</button>
   </div>
 </div>
 </template>

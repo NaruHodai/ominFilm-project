@@ -48,14 +48,14 @@ export default {
       <div class="photo-wrap" v-for="(photo, index) in photos" :key="index">
         <div class="photo-flame" @click="onClickMoveDetailPage(index)">
           <div class="img-box">
-            <img
-                v-for="(imgSrc, imgIndex) in photo.src"
-                :key="imgIndex"
-                :src="imgSrc"
-                :class="{ 'active': imgIndex === currentPhotoIndex }"
-                class="image"
-            />
-
+<!--            <img-->
+<!--                v-for="(imgSrc, imgIndex) in photo.src"-->
+<!--                :key="imgIndex"-->
+<!--                :src="imgSrc"-->
+<!--                :class="{ 'active': imgIndex === currentPhotoIndex }"-->
+<!--                class="image"-->
+<!--            />-->
+            <img :src="photo.src[0]">
           </div>
           <div class="text-overlay-wrap">
             <div class="text-overlay">

@@ -23,6 +23,17 @@ export const getContent = async (id) => {
     }
 }
 
+/* 컨텐츠 순서 수정 */
+export const updateContentOrder = async (contents) => {
+    try {
+        const response = await api.put(`/admin/project/all`, contents);
+        return response.data;
+    } catch (error) {
+        console.error('Failed to fetch projects:', error);
+        throw error; // 에러를 다시 던져서 호출자가 처리할 수 있게 함
+    }
+}
+
 /* 컨텐츠 추가 */
 export const postContent = async (content) => {
     console.log(content);
@@ -34,8 +45,6 @@ export const postContent = async (content) => {
     formData.append('clientName', content.clientName);
     formData.append('projectPlace', content.projectPlace);
     formData.append('releaseDate', content.releaseDate);
-    // formData.append('imageSrc', content.imageSrc);
-    // formData.append('youtubeSrc', content.youtubeSrc);
 
     if (content.imageSrc) {
         content.imageSrc.forEach((file) => {
