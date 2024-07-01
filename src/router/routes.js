@@ -5,4 +5,5 @@ export default Object.freeze({
     LoginPage: "loginPage",
     ContentsInfoPage: "contentsInfoPage",
     AddContentsInfoPage: "addContentsInfoPage",
+    NotFoundPage: "notFoundPage",
 })

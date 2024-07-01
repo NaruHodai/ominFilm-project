@@ -4,11 +4,17 @@ import { useAdminStore } from "@/store/admin"
 
 const router = createRouter({
     history: createWebHistory(""),
-    routes: [    {
-        path: "/",
-        name: Routes.Main,
-        component: () => import("@/views/MainView.vue"),
-    },
+    routes: [
+        {
+            path: "/",
+            name: Routes.Main,
+            component: () => import("@/views/MainView.vue"),
+        },
+        {
+            path: '/:catchAll(.*)',
+            name: Routes.NotFoundPage,
+            component: () => import("@/views/NotFoundView.vue"),
+        },
         {
             path: "/detail/:projectId",
             name: Routes.DetailPage,
