@@ -1,8 +1,8 @@
 <script>
 
-import {computed, onMounted, ref, watch} from "vue";
+import {computed, nextTick, onMounted, ref, watch} from "vue";
 import {useRoute, useRouter} from 'vue-router';
-import {deleteContent, getContent} from "@/api/contents";
+import {deleteContent, getContent, updateContent} from "@/api/contents";
 import Routes from "@/router/routes";
 
 export default {
@@ -11,16 +11,30 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const projectId = route.params.projectId;
+
+    const projectDiviSelect = ref(null);
+    const projectTitleSelect = ref(null);
+    const clientDiviSelect = ref(null);
+    const clientNameSelect = ref(null);
+    const projectPlaceSelect = ref(null);
+
     const content = ref("");
     const photoDate = ref("");
     const filledSrc = ref( []);
+    const deleteImageId = ref([]);
+    const addImageFile = ref([]);
 
     const fetchContent = async () => {
       try {
         const data = await getContent(projectId);
         content.value = data;
         photoDate.value = formatDateString(content.value.releaseDate);
-        filledSrc.value = content.value.imageSrc;
+        filledSrc.value = content.value.image.map(img => ({
+          url: img.url,
+          projectId: img.projectId,
+          contentSeq: img.contentSeq
+        }));
+        initializeFilledSrc();
       } catch (error) {
         console.error('Error fetching contents:', error);
       }
@@ -60,24 +74,26 @@ export default {
         { immediate: true }
     );
 
-    const filledYoutubeSrc = computed(() => {
-      const youtubeSrc = content.value.youtubeSrc || [];
-      return youtubeSrc.slice(0, 5).concat(Array(5 - youtubeSrc.length).fill(""));
-    });
-
     const initializeFilledSrc = () => {
       while (filledSrc.value.length < 10) {
-        filledSrc.value.push("");
+        filledSrc.value.push({ url: "", projectId: null, contentSeq: null });
       }
       filledSrc.value = filledSrc.value.slice(0, 10);
     };
     initializeFilledSrc();
 
-    // currentContents.src 변경 시 filledSrc를 초기화
     watch(
-        () => content.value.imageSrc,
+        () => content.value.image,
         (newSrc) => {
-          filledSrc.value = newSrc ? newSrc.slice(0, 10) : [];
+          if (newSrc) {
+            filledSrc.value = newSrc.map(img => ({
+              url: img.url,
+              projectId: img.projectId,
+              contentSeq: img.contentSeq
+            })).slice(0, 10);
+          } else {
+            filledSrc.value = [];
+          }
           initializeFilledSrc();
         },
         { immediate: true }
@@ -85,24 +101,99 @@ export default {
 
     const onFileChange = (event, index) => {
       const file = event.target.files[0];
+      addImageFile.value[index] = file;
       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          // 업로드된 파일의 URL로 filledSrc의 해당 인덱스를 업데이트
-          filledSrc.value[index] = e.target.result;
+          filledSrc.value[index].url = e.target.result;
+          filledSrc.value[index].projectId = filledSrc.value[index].projectId || null;
+          filledSrc.value[index].contentSeq = filledSrc.value[index].contentSeq || null;
         };
         reader.readAsDataURL(file);
       }
     };
 
     const removeImage = (index) => {
-      // 해당 인덱스의 이미지를 빈 문자열로 설정
-      filledSrc.value[index] = "";
-      console.log(filledSrc.value);
+      if (filledSrc.value[index].projectId) {
+        deleteImageId.value.push({
+          projectId: filledSrc.value[index].projectId,
+          contentSeq: filledSrc.value[index].contentSeq,
+        });
+      }
+      filledSrc.value[index] = { url: "", projectId: null, contentSeq: null };
+      addImageFile.value[index] = "";
     };
 
-    const onClickSaveContents = () => {
-      console.log("저장");
+    const onClickSaveContents = async () => {
+      if (!content.value.projectDivi) {
+        alert("Type을 선택해주세요.");
+        nextTick(() => {
+          // ref를 통해 DOM 요소에 접근
+          if (projectDiviSelect.value && projectDiviSelect.value.focus) {
+            projectDiviSelect.value.focus();
+          }
+        });
+        return;
+      }
+
+      if (!content.value.projectTitle) {
+        alert("Name을 선택해주세요.");
+        nextTick(() => {
+          // ref를 통해 DOM 요소에 접근
+          if (projectTitleSelect.value && projectTitleSelect.value.focus) {
+            projectTitleSelect.value.focus();
+          }
+        });
+        return;
+      }
+
+      if (!content.value.clientDivi) {
+        alert("ClientType을 선택해주세요.");
+        nextTick(() => {
+          // ref를 통해 DOM 요소에 접근
+          if (clientDiviSelect.value && clientDiviSelect.value.focus) {
+            clientDiviSelect.value.focus();
+          }
+        });
+        return;
+      }
+
+      if (!content.value.clientName) {
+        alert("Clent를 선택해주세요.");
+        nextTick(() => {
+          // ref를 통해 DOM 요소에 접근
+          if (clientNameSelect.value && clientNameSelect.value.focus) {
+            clientNameSelect.value.focus();
+          }
+        });
+        return;
+      }
+
+      if (!content.value.projectPlace) {
+        alert("Place를 선택해주세요.");
+        nextTick(() => {
+          // ref를 통해 DOM 요소에 접근
+          if (projectPlaceSelect.value && projectPlaceSelect.value.focus) {
+            projectPlaceSelect.value.focus();
+          }
+        });
+        return;
+      }
+
+      content.value.releaseDate = formatDateString(content.value.releaseDate);
+
+      try {
+        const response = await updateContent(content.value, deleteImageId.value, addImageFile.value);
+        if (response) {
+          alert(response);
+          await router.push({
+            name:Routes.AdminPage,
+          });
+        }
+      } catch (error) {
+        console.error('컨텐츠 수정 실패:', error);
+      }
+
     }
     const onClickDeleteContents = async () => {
       if (confirm("정말로 삭제하시겠습니까?")) {
@@ -115,15 +206,19 @@ export default {
             });
           }
         } catch (error) {
-          console.error('Error fetching contents:', error);
+          console.error('컨텐츠 삭제 실패:', error);
         }
       }
     }
     return {
+      projectDiviSelect,
+      projectTitleSelect,
+      clientDiviSelect,
+      clientNameSelect,
+      projectPlaceSelect,
       onClickSaveContents,
       onClickDeleteContents,
       formattedDate,
-      filledYoutubeSrc,
       onFileChange,
       filledSrc,
       removeImage,
@@ -140,7 +235,7 @@ export default {
         <div class="row mb-3">
           <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Type</label>
           <div class="col-sm-10">
-            <select class="form-select form-select-sm" v-model="content.projectDivi" aria-label="Small select example">
+            <select class="form-select form-select-sm" v-model="content.projectDivi" ref="projectDiviSelect" aria-label="Small select example">
               <option selected>Type</option>
               <option value="M/V">M/V</option>
               <option value="Live">Live</option>
@@ -157,13 +252,13 @@ export default {
         <div class="row mb-3">
           <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Name</label>
           <div class="col-sm-10">
-            <input class="form-control form-control-sm" v-model="content.projectTitle">
+            <input class="form-control form-control-sm" v-model="content.projectTitle" ref="projectTitleSelect">
           </div>
         </div>
         <div class="row mb-3">
           <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">ClientType</label>
           <div class="col-sm-10">
-            <select class="form-select form-select-sm" v-model="content.clientDivi" aria-label="Small select example">
+            <select class="form-select form-select-sm" v-model="content.clientDivi" ref="clientDiviSelect" aria-label="Small select example">
               <option selected>ClientType</option>
               <option value="Artist">Artist</option>
               <option value="Band">Band</option>
@@ -174,13 +269,13 @@ export default {
         <div class="row mb-3">
           <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Client</label>
           <div class="col-sm-10">
-            <input class="form-control form-control-sm" v-model="content.clientName">
+            <input class="form-control form-control-sm" v-model="content.clientName" ref="clientNameSelect">
           </div>
         </div>
         <div class="row mb-3">
           <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Place</label>
           <div class="col-sm-10">
-            <input class="form-control form-control-sm" v-model="content.projectPlace">
+            <input class="form-control form-control-sm" v-model="content.projectPlace" ref="projectPlaceSelect">
           </div>
         </div>
         <div class="row mb-3">
@@ -199,11 +294,11 @@ export default {
                   type="file"
                   accept="image/*"
                   @change="onFileChange($event, index)"
-                  v-if="!image"
+                  v-if="!image.url"
               >
               <!-- 기존 이미지 미리보기 -->
-              <div v-if="image" class="mt-2">
-                <img :src="image" alt="Preview" class="img-thumbnail" style="max-width: 200px;">
+              <div v-if="image.url" class="mt-2">
+                <img :src="image.url" alt="Preview" class="img-thumbnail" style="max-width: 200px;">
                 <button @click="removeImage(index)" class="btn btn-sm btn-danger" style="margin-left: 5px;">X</button>
               </div>
             </div>
@@ -212,9 +307,25 @@ export default {
         <div class="row mb-3">
           <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Youtube</label>
           <div class="col-sm-10">
-            <div class="input-group col-sm-10" v-for="(video, index) in filledYoutubeSrc" :key="index">
+            <div class="input-group col-sm-10">
               <span class="input-group-text" id="basic-addon3">https://www.youtube.com/embed/</span>
-              <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" v-model="filledYoutubeSrc[index]">
+              <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" v-model="content.youtubeSrcFirst">
+            </div>
+            <div class="input-group col-sm-10">
+              <span class="input-group-text" id="basic-addon3">https://www.youtube.com/embed/</span>
+              <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" v-model="content.youtubeSrcSecond">
+            </div>
+            <div class="input-group col-sm-10">
+              <span class="input-group-text" id="basic-addon3">https://www.youtube.com/embed/</span>
+              <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" v-model="content.youtubeSrcThird">
+            </div>
+            <div class="input-group col-sm-10">
+              <span class="input-group-text" id="basic-addon3">https://www.youtube.com/embed/</span>
+              <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" v-model="content.youtubeSrcFourth">
+            </div>
+            <div class="input-group col-sm-10">
+              <span class="input-group-text" id="basic-addon3">https://www.youtube.com/embed/</span>
+              <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" v-model="content.youtubeSrcFifth">
             </div>
           </div>
         </div>

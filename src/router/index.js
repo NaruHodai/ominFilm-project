@@ -10,7 +10,7 @@ const router = createRouter({
         component: () => import("@/views/MainView.vue"),
     },
         {
-            path: "/detail/:photo",
+            path: "/detail/:projectId",
             name: Routes.DetailPage,
             component: () => import("@/views/DetailPageView.vue"),
         },

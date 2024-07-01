@@ -1,10 +1,13 @@
 <script>
 import {computed, ref, nextTick} from "vue";
 import {postContent} from "@/api/contents";
+import Routes from "@/router/routes";
+import {useRouter} from "vue-router";
 
 export default {
   name: "AddContentsInfo",
   setup() {
+    const router = useRouter();
     const content = ref({
       projectDivi:'Live',
       projectTitle:'준석이와 밴드해요',
@@ -13,13 +16,18 @@ export default {
       projectPlace:'시흥대로',
       releaseDate:'2024-08-08',
       imageSrc:[],
-      youtubeSrc:['L9Wh9Wpto1c', 'dfdfsdfd'],
+      youtubeSrcFirst:'L9Wh9Wpto1c',
+      youtubeSrcSecond:'dfdfsdfd',
+      youtubeSrcThird:'',
+      youtubeSrcFourth:'',
+      youtubeSrcFifth:'',
     })
     const projectDiviSelect = ref(null);
     const projectTitleSelect = ref(null);
     const clientDiviSelect = ref(null);
     const clientNameSelect = ref(null);
     const projectPlaceSelect = ref(null);
+    const imgSelect = ref([]);
 
     const formatDateString = (date) => {
       if (!date) return "";
@@ -36,6 +44,7 @@ export default {
 
     const onFileChange = (event, index) => {
       const file = event.target.files[0];
+      imgSelect.value[index] = file
       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -46,14 +55,10 @@ export default {
       }
     };
 
-    const filledYoutubeSrc = computed(() => {
-      const youtubeSrc = content.value.youtubeSrc || [];
-      return youtubeSrc.slice(0, 5).concat(Array(5 - youtubeSrc.length).fill(""));
-    });
-
     const removeImage = (index) => {
       // 해당 인덱스의 이미지를 빈 문자열로 설정
       content.value.imageSrc[index] = "";
+      imgSelect.value[index] = ""
     };
 
     const onClickAddContent = async () => {
@@ -114,8 +119,22 @@ export default {
 
       content.value.releaseDate = formatDateString(content.value.releaseDate);
 
-      const promise = await postContent(content.value);
-      console.log("promise:", promise);
+      if (imgSelect.value.length < 3) {
+        alert("이미지를 3장이상 선택해주세요.");
+        return;
+      }
+
+      try {
+        const promise = await postContent(content.value, imgSelect.value);
+        if (promise) {
+          alert("추가가 완료되었습니다.");
+          await router.push({
+            name:Routes.AdminPage,
+          });
+        }
+      } catch (error) {
+        console.error('컨텐츠 추가 실패:', error);
+      }
     }
 
     return {
@@ -127,7 +146,6 @@ export default {
       projectPlaceSelect,
       onFileChange,
       filledFilledSrc,
-      filledYoutubeSrc,
       removeImage,
       onClickAddContent,
     };
@@ -214,9 +232,25 @@ export default {
         <div class="row mb-3">
           <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Youtube</label>
           <div class="col-sm-10">
-            <div class="input-group col-sm-10" v-for="(video, index) in filledYoutubeSrc" :key="index">
+            <div class="input-group col-sm-10">
               <span class="input-group-text" id="basic-addon3">https://www.youtube.com/embed/</span>
-              <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" v-model="content.youtubeSrc[index]">
+              <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" v-model="content.youtubeSrcFirst">
+            </div>
+            <div class="input-group col-sm-10">
+              <span class="input-group-text" id="basic-addon3">https://www.youtube.com/embed/</span>
+              <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" v-model="content.youtubeSrcSecond">
+            </div>
+            <div class="input-group col-sm-10">
+              <span class="input-group-text" id="basic-addon3">https://www.youtube.com/embed/</span>
+              <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" v-model="content.youtubeSrcThird">
+            </div>
+            <div class="input-group col-sm-10">
+              <span class="input-group-text" id="basic-addon3">https://www.youtube.com/embed/</span>
+              <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" v-model="content.youtubeSrcFourth">
+            </div>
+            <div class="input-group col-sm-10">
+              <span class="input-group-text" id="basic-addon3">https://www.youtube.com/embed/</span>
+              <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" v-model="content.youtubeSrcFifth">
             </div>
           </div>
         </div>

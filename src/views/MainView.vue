@@ -1,42 +1,40 @@
 <script>
 import {useRouter} from "vue-router";
-import { getCurrentInstance, onMounted, ref } from "vue";
+import { onMounted, ref} from "vue";
 import Routes from "@/router/routes"
+import {getContents} from "@/api/contents";
 
 export default {
   name:'MainView',
   setup(){
-    const { proxy } = getCurrentInstance();
     const router = useRouter();
-    const photos = proxy.$photos;
+    const items = ref("");
 
-    const onClickMoveDetailPage = (index) => {
+    const fetchContents = async () => {
+      try {
+        const data = await getContents();
+        items.value = data.sort((a, b) => a.projectSeq - b.projectSeq);
+      } catch (error) {
+        console.error('Error fetching contents:', error);
+      }
+    };
+
+    onMounted(() => {
+      fetchContents();
+    });
+
+    const onClickMoveDetailPage = (projectId) => {
       router.push({
         name: Routes.DetailPage,
         params:{
-          photo: index
+          projectId: projectId
         },
       })
     }
 
-    const currentPhotoIndex = ref(0);
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const totalPhotos = photos.length;
-
-      const newIndex = Math.floor(scrollPosition / windowHeight) % totalPhotos;
-      currentPhotoIndex.value = newIndex;
-    };
-
-    onMounted(() => {
-      window.addEventListener('scroll', handleScroll);
-    });
-
     return {
-      photos,
+      items,
       onClickMoveDetailPage,
-      currentPhotoIndex,
     };
   }
 }
@@ -45,33 +43,26 @@ export default {
 <template>
   <main>
     <section>
-      <div class="photo-wrap" v-for="(photo, index) in photos" :key="index">
-        <div class="photo-flame" @click="onClickMoveDetailPage(index)">
+      <div class="photo-wrap" v-for="(item, index) in items" :key="index">
+        <div class="photo-flame" @click="onClickMoveDetailPage(item.projectId)">
           <div class="img-box">
-<!--            <img-->
-<!--                v-for="(imgSrc, imgIndex) in photo.src"-->
-<!--                :key="imgIndex"-->
-<!--                :src="imgSrc"-->
-<!--                :class="{ 'active': imgIndex === currentPhotoIndex }"-->
-<!--                class="image"-->
-<!--            />-->
-            <img :src="photo.src[0]">
+            <img :src="item.image[0].url">
           </div>
           <div class="text-overlay-wrap">
             <div class="text-overlay">
-              <div class="text-middle">{{ photo.type }}</div>
-              <div class="text-big">{{ photo.name }}</div>
+              <div class="text-middle">{{ item.projectDivi }}</div>
+              <div class="text-big">{{ item.projectTitle }}</div>
               <div class="text-small">
-                <b class="light">{{ photo.clientType }}. </b>
-                <b class="bold">{{ photo.client }}</b>
+                <b class="light">{{ item.clientDivi }}. </b>
+                <b class="bold">{{ item.clientName }}</b>
               </div>
               <div class="text-small">
                 <b class="light">Place. </b>
-                <b class="bold">{{photo.place}}</b>
+                <b class="bold">{{item.projectPlace}}</b>
               </div>
               <div class="text-small">
-                <b class="light">{{ photo.date === "" ? "" : `Date. `}}</b>
-                <b class="bold">{{ photo.date === "" ? "unreleased" : `${photo.date}`}}</b>
+                <b class="light">{{ item.releaseDate === null ? "" : `Date. `}}</b>
+                <b class="bold">{{ item.releaseDate === null ? "unreleased" : `${item.releaseDate}`}}</b>
               </div>
             </div>
           </div>
@@ -86,5 +77,50 @@ export default {
 </template>
 
 <style scoped>
+main {
+
+}
+
+section {
+
+}
+
+.photo-flame {
+  position: relative; /* 포지션 설정 */
+  max-width: 100%;
+}
+
+.photo-flame img {
+  width: 100%; /* 이미지의 너비를 부모 요소에 맞게 100%로 설정합니다 */
+  height: auto; /* 이미지의 가로 세로 비율을 유지합니다 */
+  display: block; /* 인라인 요소에서 블록 요소로 변환하여 가로 너비를 100%로 설정합니다 */
+}
+
+.text-overlay-wrap {
+  position: absolute; /* 포지션 설정 */
+  height: 80%;
+}
+
+.text-overlay {
+  position: sticky;
+  top: 10vh;
+  color: #fff; /* 텍스트 색상을 흰색으로 설정 */
+}
+.text-overlay .text-middle {
+  font-family: GmarketSansTTFBold;
+}
+
+.text-overlay .text-big {
+  font-family: Sandoll CinemaTheater;
+  font-weight: 400;
+}
+
+.text-overlay .text-small .light{
+  font-family: GmarketSansTTFLight;
+}
+
+.text-overlay .text-small .bold{
+  font-family: GmarketSansTTFBold;
+}
 
 </style>
