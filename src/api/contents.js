@@ -122,16 +122,16 @@ export const updateContent = async (content, deleteImageId, addImageFile) => {
         });
     }
 
-    // const loadingStore = useLoadingStore();
-    // loadingStore.setLoading(true);
-    //
-    // try {
-    //     const response = await api.put(`/admin/project`, formData);
-    //     loadingStore.setLoading(false);
-    //     return response.data;
-    // } catch (error) {
-    //     loadingStore.setLoading(false);
-    //     console.error('프로젝트 수정 실패:', error);
-    //     throw error;
-    // }
+    const loadingStore = useLoadingStore();
+    loadingStore.setLoading(true);
+
+    try {
+        const response = await api.put(`/admin/project`, formData);
+        loadingStore.setLoading(false);
+        return response.data;
+    } catch (error) {
+        loadingStore.setLoading(false);
+        console.error('프로젝트 수정 실패:', error);
+        throw error;
+    }
 }
