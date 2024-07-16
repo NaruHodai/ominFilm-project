@@ -26,8 +26,19 @@ export default {
       window.location.href = 'tel:' + phoneNumber;
     };
 
+    const copied = ref(false);
     const sendKakaoMessage = () => {
-      window.location.href = "kakaotalk://plusfriend/friend/01020826230";
+      navigator.clipboard.writeText("als918")
+          .then(() => {
+            copied.value = true;
+            setTimeout(() => {
+              copied.value = false;
+              alert("카카오톡 아이디가 복사되었습니다");
+            }, 500);
+          })
+          .catch(err => {
+            console.error('텍스트 복사 실패:', err);
+          });
     };
 
     const moveInstagram = () => {
@@ -75,8 +86,8 @@ export default {
         <img :src="headerRightLogo">
       </div>
       <div class="hover-info">
-        <div class="info-text" @click="sendKakaoMessage">KAKAOTALK</div>
         <div class="info-text" @click="moveInstagram">INSTAGRAM</div>
+        <div class="info-text" @click="sendKakaoMessage">KAKAO | als918</div>
         <div class="info-text" @click="makeCall">+82)010-2082-6230</div>
       </div>
     </div>
