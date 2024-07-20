@@ -65,17 +65,32 @@ export default {
   <div class="photo-wrap">
     <div class="photo-text">
     </div>
-    <div class="iframe-container" v-for="(youtube, index) in content.youtubeSrc" :key="index">
-      <iframe width="100%" :height="iframeHeight" :src="`https://www.youtube.com/embed/${youtube}`" allowfullscreen />
+    <div class="iframe-container" v-if="content.youtubeSrcFirst">
+      <iframe width="100%" :height="iframeHeight" :src="`https://www.youtube.com/embed/${content.youtubeSrcFirst}`" allowfullscreen />
+    </div>
+    <div class="iframe-container" v-if="content.youtubeSrcSecond">
+      <iframe width="100%" :height="iframeHeight" :src="`https://www.youtube.com/embed/${content.youtubeSrcSecond}`" allowfullscreen />
+    </div>
+    <div class="iframe-container" v-if="content.youtubeSrcThird">
+      <iframe width="100%" :height="iframeHeight" :src="`https://www.youtube.com/embed/${content.youtubeSrcThird}`" allowfullscreen />
+    </div>
+    <div class="iframe-container" v-if="content.youtubeSrcFourth">
+      <iframe width="100%" :height="iframeHeight" :src="`https://www.youtube.com/embed/${content.youtubeSrcFourth}`" allowfullscreen />
+    </div>
+    <div class="iframe-container" v-if="content.youtubeSrcFifth">
+      <iframe width="100%" :height="iframeHeight" :src="`https://www.youtube.com/embed/${content.youtubeSrcFifth}`" allowfullscreen />
     </div>
     <div class="photo-wrap" v-for="(photo, index) in content.image" :key="index">
       <div class="photo-flame">
-        <img :src="photo.url">
+        <img class="photo" :src="photo.url">
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+  .photo {
+    width: 100%;
+  }
 
 </style>
