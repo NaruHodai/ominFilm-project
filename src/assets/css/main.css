@@ -71,10 +71,6 @@ header {
     z-index: 999; /* Ensure it's on top of other content */
 }
 
-.logo.right:hover .hover-info {
-    display: block;
-}
-
 .logo .hover-info .info-text {
     font-family: GmarketSansTTFMedium;
     color: white;
@@ -361,5 +357,5 @@ footer {
     .logo {
         width: 150px;
     }
-
 }
+

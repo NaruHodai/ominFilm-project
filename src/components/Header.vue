@@ -12,6 +12,20 @@ export default {
     const isAdmin = computed(() => adminStore.signin);
     const headerRightLogo = ref(require("@/assets/images/headerRightLogo.jpg"));
     const headerRightLogoHover = ref(require("@/assets/images/headerRightLogoMouseOver.jpg"));
+    const hoverInfoVisible = ref(false);
+
+    const toggleImageAndInfo = () => {
+      const hoverInfo = document.querySelector('.hover-info');
+      if (hoverInfoVisible.value) {
+        resetImage();
+        hoverInfoVisible.value = false;
+        hoverInfo.style.display = 'none';
+      } else {
+        changeImage();
+        hoverInfoVisible.value = true;
+        hoverInfo.style.display = 'block';
+      }
+    }
 
     const changeImage = () => {
       headerRightLogo.value = headerRightLogoHover.value;
@@ -69,6 +83,7 @@ export default {
       onClickLogout,
       changeImage,
       resetImage,
+      toggleImageAndInfo,
       headerRightLogo,
       isAdmin,
     };
@@ -81,7 +96,7 @@ export default {
     <div class="logo left" @click="onClickMoveMain">
       <img src="@/assets/images/headerLeftLogo.jpg">
     </div>
-    <div class="logo right" v-if="!isAdmin" @mouseover="changeImage" @mouseleave="resetImage">
+    <div class="logo right" v-if="!isAdmin" @click="toggleImageAndInfo">
       <div class="logo-img">
         <img :src="headerRightLogo">
       </div>
