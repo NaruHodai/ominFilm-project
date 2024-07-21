@@ -1,3 +1,7 @@
+:root {
+    color-scheme: light only;
+}
+
 @font-face {
     font-family: 'GmarketSansTTFLight';
     src: url('@/assets/fonts/GmarketSansTTFLight.ttf');
