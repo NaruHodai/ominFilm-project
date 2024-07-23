@@ -8,4 +8,4 @@ VIDEO, PHOTO, DESIGN 등 다양한 분야에서 활약하고 있고 대구광역
 
 
 
-##  프로젝트 바로가기 ↗️ [0minFilm](https://0minfilm.shop/)
+##  프로젝트 바로가기 ↗️ [0minFilm](https://0minfilm.com/)
