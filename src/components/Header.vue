@@ -97,14 +97,12 @@ export default {
       <img src="@/assets/images/headerLeftLogo.jpg">
     </div>
     <div class="logo right" v-if="!isAdmin" @click="toggleImageAndInfo">
-      <div class="logo-img">
-        <img :src="headerRightLogo">
-      </div>
-      <div class="hover-info">
-        <div class="info-text" @click="moveInstagram">INSTAGRAM</div>
-        <div class="info-text" @click="sendKakaoMessage">KAKAO | als918</div>
-        <div class="info-text" @click="makeCall">+82)010-2082-6230</div>
-      </div>
+      <img :src="headerRightLogo">
+    </div>
+    <div class="hover-info">
+      <div class="info-text" @click="moveInstagram">INSTAGRAM</div>
+      <div class="info-text" @click="sendKakaoMessage">KAKAO | als918</div>
+      <div class="info-text" @click="makeCall">+82)010-2082-6230</div>
     </div>
     <div class="hover-info" v-if="!isAdmin" style="background: red; width: 200px"></div>
     <div class="logo right" v-if="isAdmin">
