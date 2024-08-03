@@ -22,43 +22,41 @@ export default {
     const handleScroll = () => {
       const divWraps = document.querySelectorAll('.photo-wrap');
       const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
       const headerHeight = 70; // 헤더의 높이
 
-      divWraps.forEach((divWrap) => {
+      divWraps.forEach((divWrap, index) => {
         const images = divWrap.querySelectorAll('.img-box .images');
         const divTop = divWrap.offsetTop - headerHeight;
         const divHeight = divWrap.offsetHeight;
-        const divBottom = divTop + divHeight;
 
-        // 요소가 화면의 상단에 닿았을 때만 작동
-        if (divTop <= scrollY) {
-          // 요소가 화면에 보이는 부분 계산
-          const visibleHeight = Math.min(divBottom, scrollY + windowHeight) - Math.max(divTop, scrollY);
-          const visibleRatio = visibleHeight / divHeight;
-
-          images.forEach((img, imgIndex) => {
-            if (visibleRatio >= (imgIndex + 0.5) / images.length) {
-              img.style.opacity = 1;
-            } else if (visibleRatio >= imgIndex / images.length) {
-              const distanceFromStart = visibleRatio - imgIndex / images.length;
-              const range = 1 / images.length;
-              const opacity = Math.min(1, distanceFromStart / range);
-              img.style.opacity = opacity;
-            } else {
-              const distanceFromStart = visibleRatio - imgIndex / images.length;
-              const range = 1 / images.length;
-              const opacity = Math.min(1, distanceFromStart / range);
-              img.style.opacity = opacity;
-            }
+        if (index === 0 && scrollY === 0) {
+          images[0].style.opacity = 1;
+          images[1].style.opacity = 0;
+          images[2].style.opacity = 0;
+        } else {
+          images.forEach((img) => {
+            img.style.opacity = 0; // 초기 상태로 모든 이미지를 숨김
           });
+
+          // 첫 번째 이미지가 기본적으로 보이도록 설정
+          images[0].style.opacity = 1;
+
+          // 두 번째 이미지가 보이는 조건
+          if (scrollY >= divTop) {
+            console.log("1");
+            images[0].style.opacity = 0;
+            images[1].style.opacity = 1;
+          }
+
+          // 세 번째 이미지가 보이는 조건
+          if (scrollY >= divTop + divHeight / 5) {
+            console.log("2");
+            images[1].style.opacity = 0;
+            images[2].style.opacity = 1;
+          }
         }
 
-        // 마지막 이미지는 항상 보이도록 설정
-        const lastImage = divWrap.querySelectorAll('.img-box .images')[0];
-        if (scrollY + windowHeight >= divBottom) {
-          lastImage.style.opacity = 1;
-        }
+
       });
     };
 
@@ -94,9 +92,9 @@ export default {
       <div class="photo-wrap" v-for="(item, index) in items" :key="index">
         <div class="photo-flame" @click="onClickMoveDetailPage(item.projectId)">
           <div class="img-box">
-            <img :src="item.image[2].url" style="opacity: 0" class="images">
-            <img :src="item.image[1].url" style="opacity: 0" class="images">
             <img :src="item.image[0].url" style="opacity: 1" class="images">
+            <img :src="item.image[1].url" style="opacity: 0" class="images">
+            <img :src="item.image[2].url" style="opacity: 0" class="images">
           </div>
           <div class="text-overlay-wrap">
             <div class="text-overlay">
