@@ -50,7 +50,7 @@ header {
 
 .logo.right {
     position: absolute;
-    right: 0;
+    right: 30px;
 }
 
 .hover-info {
@@ -272,6 +272,10 @@ footer {
 
 /* 미디어 쿼리 */
 @media screen and (max-width: 768px) {
+    .logo.right {
+        position: absolute;
+        right: 0;
+    }
     .hover-info {
         width: 100%;
     }
