@@ -2,7 +2,7 @@
 import {useRouter} from "vue-router";
 import Routes from "@/router/routes"
 import { useAdminStore } from "@/store/admin";
-import { computed, ref } from "vue";
+import { computed, ref, onMounted, onUnmounted, watch } from "vue";
 
 export default {
   name:'HeaderView',
@@ -15,15 +15,17 @@ export default {
     const hoverInfoVisible = ref(false);
 
     const toggleImageAndInfo = () => {
-      const hoverInfo = document.querySelector('.hover-info');
+      // const hoverInfo = document.querySelector('.hover-info');
       if (hoverInfoVisible.value) {
         resetImage();
         hoverInfoVisible.value = false;
-        hoverInfo.style.display = 'none';
+        // hoverInfo.style.display = 'none';
+        hideHoverInfo();
       } else {
         changeImage();
         hoverInfoVisible.value = true;
-        hoverInfo.style.display = 'block';
+        // hoverInfo.style.display = 'block';
+        showHoverInfo();
       }
     }
 
@@ -33,6 +35,20 @@ export default {
 
     const resetImage = () => {
       headerRightLogo.value = require("@/assets/images/headerRightLogo.jpg");
+    }
+
+    const showHoverInfo = () => {
+      const hoverInfo = document.querySelector('.hover-info');
+      if (hoverInfo) {
+        hoverInfo.style.display = 'block';
+      }
+    }
+
+    const hideHoverInfo = () => {
+      const hoverInfo = document.querySelector('.hover-info');
+      if (hoverInfo) {
+        hoverInfo.style.display = 'none';
+      }
     }
 
     const makeCall = () => {
@@ -74,6 +90,30 @@ export default {
         })
       }
     }
+
+    const handleClickOutsideHoverInfo = (event) => {
+      const hoverInfo = document.querySelector('.hover-info');
+      const logoRight = document.querySelector('.logo.right');
+      if (hoverInfo && logoRight && !logoRight.contains(event.target) && !hoverInfo.contains(event.target)) {
+        resetImage();
+        hoverInfoVisible.value = false;
+        hideHoverInfo();
+      }
+    };
+
+    onMounted(() => {
+      document.addEventListener('click', handleClickOutsideHoverInfo);
+    });
+
+    onUnmounted(() => {
+      document.removeEventListener('click', handleClickOutsideHoverInfo);
+    });
+
+    watch(() => router.currentRoute, () => {
+      resetImage();
+      hoverInfoVisible.value = false;
+      hideHoverInfo();
+    });
 
     return {
       makeCall,
