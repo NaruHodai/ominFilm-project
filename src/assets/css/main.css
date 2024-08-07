@@ -64,6 +64,14 @@ header {
 }
 
 .hover-info .info-text {
+    transition: color 0.3s ease;
+}
+
+.hover-info .info-text:hover {
+    border: 7px solid rgba(254,201,64);
+}
+
+.hover-info .info-text {
     font-family: GmarketSansTTFMedium;
     color: #fff;
     height: 51px;
