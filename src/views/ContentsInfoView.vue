@@ -180,6 +180,8 @@ export default {
         return;
       }
 
+      content.value.releaseDate = formatDateString(formattedDate.value);
+
       try {
         const response = await updateContent(content.value, deleteImageId.value, addImageFile.value);
         if (response) {
