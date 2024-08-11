@@ -9,15 +9,15 @@ export default {
   setup() {
     const router = useRouter();
     const content = ref({
-      projectDivi:'Live',
-      projectTitle:'준석이와 밴드해요',
-      clientDivi:'Band',
-      clientName:'오준석',
-      projectPlace:'시흥대로',
-      releaseDate:'2024-08-08',
+      projectDivi:'',
+      projectTitle:'',
+      clientDivi:'',
+      clientName:'',
+      projectPlace:'',
+      releaseDate:'',
       imageSrc:[],
-      youtubeSrcFirst:'L9Wh9Wpto1c',
-      youtubeSrcSecond:'dfdfsdfd',
+      youtubeSrcFirst:'',
+      youtubeSrcSecond:'',
       youtubeSrcThird:'',
       youtubeSrcFourth:'',
       youtubeSrcFifth:'',
